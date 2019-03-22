@@ -1,0 +1,208 @@
+
+
+
+      <h1 class="my-6 headng">Page Heading
+        <small>Secondary Text</small>
+      </h1>
+
+
+        <div class="col-md-9" id="content"  >
+          <!-- Blog Post -->
+
+          <div class="card mb-4" *ngFor="let allPost of allPosts">
+
+            <br><div class="col-md-4"><a href="#" class="pull-left" style="margin-right:15px;">
+            <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle" style="width: 62px;margin-left: 14px;margin-bottom: 15px;">
+          </a>
+            <strong class="text-success" style="display: block;margin-top: 13px;font-size: 20px;">@{{ allPost.postuser }}</strong></div>
+            <div class="col-md-6"></div>
+
+            <div class="col-md-2" *ngIf="loginuser.email === allPost.postuser ">
+              <div class="dropdown1">
+                <button class="dropbtn" ><i class="fas fa-ellipsis-h"></i></button>
+                <div class="dropdown-content1" data-toggle="tooltip">
+                  <a  class="comentdel" (click)="deletePost(allPost.postid)">Delete</a>
+                  <a  data-toggle="modal"
+                      data-target="#editpost"
+                     (click)="getandshowDataModel(allPost);"
+                      >Edit</a>
+                </div>
+              </div>
+            </div>
+
+
+
+            <img class="card-img-top " src="{{allPost.image}}" alt="Card image cap"     style="height: 422px; width:740px;margin-left: auto;margin-right: auto;
+    display: block;">
+            <div class="card-body" style="margin:0px 32px 0px 32px;">
+              <h2 class="card-title">{{allPost.title }}</h2>
+              <p class="card-text">{{allPost.text }}</p>
+
+              <button type="button" class="btn btn-success btn-circle" >Show Comments</button></div>
+
+
+            <div class="card-footer text-muted crdfoter" id="cardfot">
+              Created At:<b> {{allPost.createdAt }}</b></div>
+
+
+
+
+            <div class="col-md-12 col-sm-6" style="padding: 0px;margin-bottom: -21px;" >
+              <div class="comment-wrapper">
+                <div class="panel panel-info">
+                  <div class="panel-body">
+                    <ul class="media-list tabNav" *ngFor="let comment of allPost.comments; let i = index">
+
+                      <li class="media" >
+                        <a href="#" class="pull-left">
+                          <img src="https://bootdey.com/img/Content/user_1.jpg" alt="" class="img-circle">
+                        </a>
+                        <div class="dropdown1" >
+                          <button class="dropbtn" ><i class="fas fa-ellipsis-h"></i></button>
+                          <div class="dropdown-content1" data-toggle="tooltip">
+                            <a  class="comentdel" (click)="deleteComment(comment.id)" >Delete</a>
+                            <a  *ngIf="loginuser.email === comment.username " (click)="editComment(comment,i)" >Edit</a>
+                          </div>
+                        </div>
+                        <div class="media-body" >
+
+                               <span class="text-muted pull-right">
+                                    <small class="text-muted">{{ comment.createdAt }}</small>
+                                </span>
+
+                          <strong class="text-success">@{{comment.username}}</strong>
+                          <p >
+                            {{comment.comment}}
+                          </p>
+                          </div>
+
+
+                      </li>
+
+
+                    </ul>
+
+                         <form  [formGroup]="angForm"  novalidate  >
+                      <div class="input-group inpuut">
+                        <input name="post_id" type="hidden" #postid value="{{allPost.postid}}">
+                        <div *ngIf="angForm.controls['comment'].invalid && (angForm.controls['comment'].dirty || angForm.controls['comment'].touched)" class="alert alert-danger">
+                          <div *ngIf="angForm.controls['comment'].errors.minlength">
+                            Atleast 2 words
+                          </div>
+                        </div>
+                        <input class="form-control input-lg" name="comment" placeholder="Add a comment" formControlName="comment" type="text" #comment>
+
+                        <span class="input-group-addon " style="background-color: white;"> <button (click)="addComment(postid.value,comment.value)" [disabled]="angForm.pristine || angForm.invalid"  class=" comntbtn"  title="Post Comment"><i class="far fa-paper-plane"></i></button>
+
+                    </span>
+                      </div>
+                         </form>
+
+                    <div class="clearfix"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          </div>
+
+
+      <div class="col-md-3">
+
+        <!-- Search Widget -->
+        <div class="card my-4 sidebarri8">
+          <h5 class="card-header">Search</h5>
+          <div class="card-body">
+            <div class="input-group" style="border: 1px solid #f7f7f8;width:203px;">
+
+              <input type="text" name="title" class="form-control live-search-box" placeholder="Search for...">
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="card my-4 sidebarri8">
+          <h5 class="card-header">Categories</h5>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">Web Design</a>
+                  </li>
+                  <li>
+                    <a href="#">HTML</a>
+                  </li>
+                  <li>
+                    <a href="#">Freebies</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-lg-6">
+                <ul class="list-unstyled mb-0">
+                  <li>
+                    <a href="#">JavaScript</a>
+                  </li>
+                  <li>
+                    <a href="#">CSS</a>
+                  </li>
+                  <li>
+                    <a href="#">Tutorials</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side Widget -->
+        <div class="card my-4 sidebarri8">
+          <h5 class="card-header">Side Widget</h5>
+          <div class="card-body">
+            You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+          </div>
+        </div>
+
+      </div>
+
+      <!-- /.modal-post edit  -->
+      <div class="modal fade " id="editpost"  tabindex="-1" role="dialog" aria-labelledby="editpost" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+              <h4 class="modal-title custom_align" id="Heading">Edit Your Blog</h4>
+            </div>
+            <form id="postmodelEdit"  >
+              <div class="modal-body">
+
+                <div class="form-group">
+                  <input class="form-control blog_id" type="text" id="blog_id"  name="id" readonly>
+                  <input class="form-control blog_userId" type="hidden"   name="userId" >
+                </div>
+                <div class="form-group">
+                  <input class="form-control blog_postuser" type="text"   name="postuser" readonly>
+                </div>
+                <div class="form-group">
+
+                  <input class="form-control blog_title" type="text" name="title" >
+
+                </div>
+                <div class="form-group">
+                  <textarea rows="9" class="form-control blog_text" name="text"></textarea>
+
+
+                </div>
+              </div>
+              <div class="modal-footer ">
+                <button type="submit" class="btn btn-warning btn-lg postEdit " style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>

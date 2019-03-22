@@ -1,0 +1,8 @@
+(err) => {
+    // throws an error, you could also catch it here
+    if (err) {
+      console.log(err);
+    }else{
+console.log("images in folder save succefully")
+    }
+  }
